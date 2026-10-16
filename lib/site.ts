@@ -7,6 +7,7 @@ export const site = {
   company: "Ally Solutions",
   logo: "/ally-logo.png",
   domain: "vivek.blog",
+  github: "https://github.com/uchiha-vivek",
   // Topic filter shown above the feed.
   topics: ["Tech", "Deep Tech", "Mathematics"] as const,
   // Signal is the curation level, like the "Signal" toggle.
