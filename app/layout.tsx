@@ -22,7 +22,7 @@ const serif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   ...pageMetadata({
-    title: `${site.masthead} — Technology & Mathematics by ${site.author}`,
+    title: `${site.masthead} — Technology & Mathematics`,
     description: site.description,
     path: "/",
     imageKey: "home",
