@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { Playfair_Display, Source_Serif_4 } from "next/font/google";
 import { site } from "@/lib/site";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const display = Playfair_Display({
@@ -18,8 +20,17 @@ const serif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: site.masthead,
-  description: site.tagline,
+  metadataBase: new URL(site.url),
+  ...pageMetadata({
+    title: `${site.masthead} — Technology & Mathematics by ${site.author}`,
+    description: site.description,
+    path: "/",
+    imageKey: "home",
+  }),
+  applicationName: site.masthead,
+  authors: [{ name: site.author, url: site.url }],
+  creator: site.author,
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

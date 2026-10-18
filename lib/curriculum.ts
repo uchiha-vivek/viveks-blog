@@ -16,7 +16,7 @@ export const appliedMath = {
       n: 1,
       slug: "infinite-series-and-power-series",
       title: "Infinite Series and Power Series",
-      sections: [],
+      sections: ["Infinite series and convergence", "Power series and approximations", "Worked examples and quizzes"],
     },
     {
       n: 2,

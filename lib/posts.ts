@@ -1,4 +1,5 @@
 import type { Signal, Topic } from "./site";
+import { seriesLessons } from "./lessons/series";
 
 export type Post = {
   slug: string;
@@ -17,6 +18,18 @@ export type Post = {
 // Your curated learnings. Add a new object to the top of this array
 // and it flows into the paper automatically.
 export const posts: Post[] = [
+  ...seriesLessons.map((lesson): Post => ({
+    slug: lesson.slug,
+    title: lesson.title,
+    dek: lesson.subtitle,
+    body: [lesson.slug === "infinite-series"
+      ? "Can infinitely many small pieces add up to a finite total? Learn to read summation notation, build partial sums, and decide whether a series converges, with worked examples and four practice questions."
+      : "Build functions from powers of a variable. Learn about coefficients, centres, convergence intervals, and polynomial approximations, with worked examples and four practice questions."],
+    topic: "Mathematics",
+    chapter: 1,
+    date: "2026-10-18",
+    readingTime: lesson.readingTime,
+  })),
   {
     slug: "littles-law-the-one-equation-every-engineer-should-know",
     title: "Little's Law: The One Equation Every Engineer Should Know",
