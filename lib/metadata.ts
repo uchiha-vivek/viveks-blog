@@ -18,7 +18,7 @@ export function pageMetadata({
 }): Metadata {
   const url = new URL(path, site.url).toString();
   const image = {
-    url: new URL(`/share/${imageKey}`, site.url).toString(),
+    url: new URL(`/share/${imageKey}?v=2`, site.url).toString(),
     width: 1200,
     height: 630,
     type: "image/png",

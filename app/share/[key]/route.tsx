@@ -27,7 +27,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ key
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #51432f", paddingTop: 22, color: "#b6aa94", fontSize: 21 }}>
         <span>By {site.author}</span>
-        <span>Technology · Deep Tech · Mathematics</span>
+        <span style={{ display: "flex", alignItems: "center", background: "#cf9a52", color: "#1b1712", padding: "12px 22px", borderRadius: 6, fontWeight: 700 }}>{card.callToAction}</span>
       </div>
     </div>,
     { width: 1200, height: 630, headers: { "Cache-Control": "public, max-age=86400, s-maxage=86400" } },
