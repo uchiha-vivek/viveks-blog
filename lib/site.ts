@@ -6,7 +6,9 @@ export const site = {
   role: "Head of Engineering",
   company: "Ally Solutions",
   logo: "/ally-logo.png",
-  domain: "vivek.blog",
+  domain: "viveksharma.blog",
+  url: "https://www.viveksharma.blog",
+  description: "Explore technology, deep tech, and applied mathematics through clear explanations and practical lessons by Vivek Sharma.",
   github: "https://github.com/uchiha-vivek",
   // Topic filter shown above the feed.
   topics: ["Tech", "Deep Tech", "Mathematics"] as const,

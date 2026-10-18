@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -17,11 +18,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { chapter } = await params;
   const c = getChapter(chapter);
-  if (!c) return { title: site.masthead };
-  return {
+  if (!c) notFound();
+  return pageMetadata({
     title: `Chapter ${c.n}: ${c.title} — ${site.masthead}`,
-    description: c.sections.join(", ") || appliedMath.title,
-  };
+    description: c.sections.length
+      ? `Explore ${c.title.toLowerCase()}: ${c.sections.join(", ")}. Chapter ${c.n} of the Applied Mathematics collection by ${site.author}.`
+      : `Explore ${c.title.toLowerCase()} in Chapter ${c.n} of the Applied Mathematics collection by ${site.author}.`,
+    path: `/${appliedMath.slug}/${c.slug}`,
+    imageKey: `chapter-${c.slug}`,
+  });
 }
 
 export default async function ChapterPage({

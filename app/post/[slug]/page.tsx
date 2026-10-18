@@ -1,3 +1,6 @@
+import { pageMetadata } from "@/lib/metadata";
+import SeriesLesson from "@/components/SeriesLesson";
+import { getSeriesLesson } from "@/lib/lessons/series";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -23,8 +26,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: site.masthead };
-  return { title: `${post.title} — ${site.masthead}`, description: post.dek };
+  if (!post) notFound();
+  return pageMetadata({
+    title: `${post.title} — ${site.masthead}`,
+    description: post.dek,
+    path: `/post/${post.slug}`,
+    imageKey: `post-${post.slug}`,
+    publishedTime: `${post.date}T00:00:00+05:30`,
+    section: post.topic,
+  });
 }
 
 export default async function PostPage({
@@ -35,6 +45,7 @@ export default async function PostPage({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
+  const lesson = getSeriesLesson(slug);
   const chapter =
     post.chapter !== undefined ? getChapterByNumber(post.chapter) : undefined;
 
@@ -74,13 +85,13 @@ export default async function PostPage({
 
         <hr className="rule" />
 
-        <div className="body">
-          {post.body.map((para, i) => (
-            <p key={i} className={i === 0 ? "dropcap" : undefined}>
-              {para}
-            </p>
-          ))}
-        </div>
+        {lesson ? <SeriesLesson lesson={lesson} /> : (
+          <div className="body">
+            {post.body.map((para, i) => (
+              <p key={i} className={i === 0 ? "dropcap" : undefined}>{para}</p>
+            ))}
+          </div>
+        )}
 
         {post.sourceUrl && (
           <p style={{ marginTop: 32 }}>
