@@ -3,6 +3,7 @@ export type LessonSection = {
   title: string;
   paragraphs: string[];
   equations?: string[];
+  illustration?: "complex-plane" | "cube-roots";
   example?: { title: string; steps: string[]; equations?: string[] };
   mistake?: string;
   recap: string;

@@ -1,16 +1,17 @@
 import Link from "next/link";
 import type { Lesson } from "@/lib/lessons/series";
-import { seriesLessons } from "@/lib/lessons/series";
+import type { Chapter } from "@/lib/curriculum";
 import MathText, { Equation } from "@/components/MathText";
 import LessonQuiz from "@/components/LessonQuiz";
+import ComplexDiagram from "@/components/ComplexDiagram";
 
-export default function SeriesLesson({ lesson }: { lesson: Lesson }) {
-  const lessonIndex = seriesLessons.findIndex((item) => item.slug === lesson.slug);
-  const previous = seriesLessons[lessonIndex - 1];
-  const next = seriesLessons[lessonIndex + 1];
+export default function SeriesLesson({ lesson, lessons, chapter }: { lesson: Lesson; lessons: Lesson[]; chapter: Chapter }) {
+  const lessonIndex = lessons.findIndex((item) => item.slug === lesson.slug);
+  const previous = lessons[lessonIndex - 1];
+  const next = lessons[lessonIndex + 1];
   return <div className="lesson-content">
     <p className="lesson-intro"><MathText text={lesson.intro} /></p>
-    {previous && <p className="lesson-prerequisite">Before you begin: <Link href={`/post/${previous.slug}`}>read the Infinite Series lesson →</Link></p>}
+    {previous && <p className="lesson-prerequisite">Before you begin: <Link href={`/post/${previous.slug}`}>{previous.title} →</Link></p>}
     <aside className="lesson-goals" aria-label="Learning goals">
       <h2>What you’ll learn</h2>
       <ul>{lesson.goals.map((goal) => <li key={goal}>{goal}</li>)}</ul>
@@ -24,6 +25,7 @@ export default function SeriesLesson({ lesson }: { lesson: Lesson }) {
       <h2 id={`${section.id}-title`}>{section.title}</h2>
       {section.paragraphs.map((paragraph, index) => <p key={index}><MathText text={paragraph} /></p>)}
       {section.equations?.map((tex) => <Equation key={tex} tex={tex} />)}
+      {section.illustration && <ComplexDiagram kind={section.illustration} />}
       {section.example && <div className="lesson-example">
         <h3>{section.example.title}</h3>
         <ol>{section.example.steps.map((step, index) => <li key={index}><MathText text={step} /></li>)}</ol>
@@ -34,9 +36,9 @@ export default function SeriesLesson({ lesson }: { lesson: Lesson }) {
     </section>)}
     <LessonQuiz questions={lesson.questions.map((question) => ({ ...question, prompt: <MathText text={question.prompt} />, options: question.options.map((option, index) => <MathText key={index} text={option} />), explanation: <MathText text={question.explanation} /> }))} />
     <nav className="lesson-navigation" aria-label="Continue learning">
-      {previous && <Link href={`/post/${previous.slug}`}>← Previous: Infinite Series</Link>}
-      {next && <Link href={`/post/${next.slug}`}>Next: Power Series →</Link>}
-      <Link href="/applied-mathematics/infinite-series-and-power-series">Back to Chapter 1</Link>
+      {previous && <Link href={`/post/${previous.slug}`}>← Previous: {previous.title}</Link>}
+      {next && <Link href={`/post/${next.slug}`}>Next: {next.title} →</Link>}
+      <Link href={`/applied-mathematics/${chapter.slug}`}>Back to Chapter {chapter.n}</Link>
     </nav>
   </div>;
 }
