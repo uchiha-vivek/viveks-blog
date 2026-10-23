@@ -13,8 +13,8 @@ export default function LessonQuiz({ questions }: { questions: Question[] }) {
 
   return <section id="quiz" className="lesson-quiz" aria-labelledby={`${id}-title`}>
     <div className="kicker">Check your understanding</div>
-    <h2 id={`${id}-title`}>A little practice</h2>
-    <p>Four multiple-choice questions. Try them before revealing the explanations. Your answers stay on this page until you leave or reload.</p>
+    <h2 id={`${id}-title`}>Objective questions</h2>
+    <p>{questions.length} multiple-choice questions, with one correct answer each. Try them before revealing the explanations. Your answers stay on this page until you leave or reload.</p>
     <form onSubmit={(event) => { event.preventDefault(); if (complete) setChecked(true); }}>
       {questions.map((question, index) => <fieldset key={index}>
         <legend>{index + 1}. {question.prompt}</legend>

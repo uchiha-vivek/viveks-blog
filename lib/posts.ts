@@ -1,5 +1,6 @@
 import type { Signal, Topic } from "./site";
 import { seriesLessons } from "./lessons/series";
+import { complexLessons } from "./lessons/complex";
 
 export type Post = {
   slug: string;
@@ -18,6 +19,16 @@ export type Post = {
 // Your curated learnings. Add a new object to the top of this array
 // and it flows into the paper automatically.
 export const posts: Post[] = [
+  ...complexLessons.map((lesson): Post => ({
+    slug: lesson.slug,
+    title: lesson.title,
+    dek: lesson.subtitle,
+    body: [`${lesson.subtitle} A beginner-friendly lesson with step-by-step examples and ${lesson.questions.length} objective questions with explained answers.`],
+    topic: "Mathematics",
+    chapter: 2,
+    date: "2026-10-23",
+    readingTime: lesson.readingTime,
+  })),
   ...seriesLessons.map((lesson): Post => ({
     slug: lesson.slug,
     title: lesson.title,

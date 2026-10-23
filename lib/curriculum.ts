@@ -23,9 +23,10 @@ export const appliedMath = {
       slug: "complex-numbers",
       title: "Complex Numbers",
       sections: [
-        "Basics, infinite and power series",
-        "Trig functions",
-        "Euler formula",
+        "Basics, arithmetic, and the complex plane",
+        "Complex series and trigonometric functions",
+        "Euler’s formula, powers, roots, and applications",
+        "Worked examples and 28 objective questions",
       ],
     },
     {

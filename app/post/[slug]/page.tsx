@@ -1,6 +1,6 @@
 import { pageMetadata } from "@/lib/metadata";
 import SeriesLesson from "@/components/SeriesLesson";
-import { getSeriesLesson } from "@/lib/lessons/series";
+import { getLessonContext } from "@/lib/lessons";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -45,7 +45,7 @@ export default async function PostPage({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
-  const lesson = getSeriesLesson(slug);
+  const lessonContext = getLessonContext(slug);
   const chapter =
     post.chapter !== undefined ? getChapterByNumber(post.chapter) : undefined;
 
@@ -85,7 +85,7 @@ export default async function PostPage({
 
         <hr className="rule" />
 
-        {lesson ? <SeriesLesson lesson={lesson} /> : (
+        {lessonContext ? <SeriesLesson {...lessonContext} /> : (
           <div className="body">
             {post.body.map((para, i) => (
               <p key={i} className={i === 0 ? "dropcap" : undefined}>{para}</p>
