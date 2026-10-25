@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { Playfair_Display, Source_Serif_4 } from "next/font/google";
 import { site } from "@/lib/site";
+import { sameAs, siteJsonLd } from "@/lib/structured-data";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 
@@ -22,7 +23,7 @@ const serif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   ...pageMetadata({
-    title: `${site.masthead} — Technology & Mathematics`,
+    title: `${site.author}, Engineer — ${site.masthead}`,
     description: site.description,
     path: "/",
     imageKey: "home",
@@ -30,6 +31,8 @@ export const metadata: Metadata = {
   applicationName: site.masthead,
   authors: [{ name: site.author, url: site.url }],
   creator: site.author,
+  keywords: [site.author, `${site.author} engineer`, `${site.author} software engineer`, site.masthead],
+  other: { "profile:username": "uchiha-vivek" },
   robots: { index: true, follow: true },
 };
 
@@ -44,6 +47,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('tdd-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
           }}
+        />
+        {sameAs.map((href) => (
+          <link key={href} rel="me" href={href} />
+        ))}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
       </head>
       <body className={`${display.variable} ${serif.variable}`}>{children}</body>

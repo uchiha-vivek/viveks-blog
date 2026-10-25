@@ -42,6 +42,7 @@ export function pageMetadata({
     },
     twitter: {
       card: "summary_large_image",
+      creator: site.xHandle,
       title,
       description,
       images: [{ url: image.url, alt: image.alt }],

@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { appliedMath, getChapterByNumber } from "@/lib/curriculum";
 import { getPost, posts } from "@/lib/posts";
 import { site } from "@/lib/site";
+import { personId } from "@/lib/structured-data";
 
 const DATE = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -49,8 +50,22 @@ export default async function PostPage({
   const chapter =
     post.chapter !== undefined ? getChapterByNumber(post.chapter) : undefined;
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.dek,
+    datePublished: `${post.date}T00:00:00+05:30`,
+    url: new URL(`/post/${post.slug}`, site.url).toString(),
+    author: { "@type": "Person", "@id": personId, name: site.author, url: site.url },
+  };
+
   return (
     <div className="shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Link href="/" className="back">
         ← {site.masthead}
       </Link>
