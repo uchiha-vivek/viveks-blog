@@ -6,6 +6,7 @@ export function pageMetadata({
   description,
   path,
   imageKey,
+  imagePath,
   publishedTime,
   section,
   tags,
@@ -14,13 +15,14 @@ export function pageMetadata({
   description: string;
   path: string;
   imageKey: string;
+  imagePath?: string; // static 1200×630 PNG in /public; overrides the generated card
   publishedTime?: string;
   section?: string;
   tags?: string[];
 }): Metadata {
   const url = new URL(path, site.url).toString();
   const image = {
-    url: new URL(`/share/${imageKey}?v=2`, site.url).toString(),
+    url: new URL(imagePath ?? `/share/${imageKey}?v=2`, site.url).toString(),
     width: 1200,
     height: 630,
     type: "image/png",
