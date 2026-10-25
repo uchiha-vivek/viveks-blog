@@ -27,7 +27,7 @@ export default function Sketch({
       <svg viewBox={viewBox} role="img" aria-label={title} style={{ fontFamily: "var(--font-sketch), cursive" }}>
         <title>{title}</title>
         <defs>
-          <filter id={filterId}>
+          <filter id={filterId} filterUnits="userSpaceOnUse" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
             <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves={2} seed={3} />
             <feDisplacementMap in="SourceGraphic" scale={2.5} />
           </filter>

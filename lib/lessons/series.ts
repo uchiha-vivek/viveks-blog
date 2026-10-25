@@ -1,9 +1,12 @@
+import type { IllustrationId } from "@/components/illustrations";
+
 export type LessonSection = {
   id: string;
   title: string;
   paragraphs: string[];
   equations?: string[];
   illustration?: "complex-plane" | "cube-roots";
+  sketch?: IllustrationId; // hand-drawn scene from components/illustrations
   example?: { title: string; steps: string[]; equations?: string[] };
   mistake?: string;
   recap: string;
@@ -42,7 +45,7 @@ export const seriesLessons: Lesson[] = [
         recap: "A sequence is a list of terms; a series is their sum."
       },
       {
-        id: "partial-sums", title: "2. Add finitely many terms first",
+        id: "partial-sums", title: "2. Add finitely many terms first", sketch: "zeno-walk",
         paragraphs: ["We cannot finish infinitely many additions one at a time. Instead, add the first $N$ terms and call the result the partial sum $S_N$. Then ask what happens as $N$ grows.", "A limit is the value these partial sums approach: we can make the distance from that value as small as we want by taking enough terms. If the partial sums approach a finite number $S$, the series converges, and its sum is $S$. Otherwise, it diverges."],
         equations: ["S_N=\\sum_{n=1}^{N}a_n", "\\sum_{n=1}^{\\infty}a_n=S\\quad\\text{means}\\quad\\lim_{N\\to\\infty}S_N=S"],
         example: { title: "Worked example · Halving the distance", steps: ["For the series $1/2+1/4+1/8+\\cdots$, the first four partial sums are $S_1=1/2$, $S_2=3/4$, $S_3=7/8$, and $S_4=15/16$.", "After $N$ terms, $S_N=1-2^{-N}$. The gap to $1$ is $2^{-N}$, which approaches zero. The series therefore converges to $1$.", "After ten terms, the gap is $1/1024$, less than $0.001$. Partial sums can give useful approximations before we take a limit."] },
@@ -117,7 +120,7 @@ export const seriesLessons: Lesson[] = [
         recap: "Use a three-step routine: find the interior, substitute the left endpoint, then substitute the right endpoint."
       },
       {
-        id: "approximation", title: "5. Approximate a function with a short polynomial",
+        id: "approximation", title: "5. Approximate a function with a short polynomial", sketch: "taylor-fit",
         paragraphs: ["A partial sum of a power series is a polynomial. Truncating means stopping after finitely many terms. This gives an approximation; it is not usually an exact equality.", "For $1/(1-x)$, retaining the terms through $x^N$ leaves the exact remainder shown below. Inside $|x|<1$, this error tends to zero as $N$ increases. Near the boundary, more terms may be needed."],
         equations: ["\\frac{1}{1-x}=\\underbrace{\\sum_{n=0}^{N}x^n}_{\\text{approximation}}+\\underbrace{\\frac{x^{N+1}}{1-x}}_{\\text{remainder}}\\qquad(|x|<1)"],
         example: { title: "Worked example · An approximation with a known error", steps: ["Choose $x=0.1$. The exact function value is $1/0.9=1.111111\\ldots$.", "Keep terms through $x^3$: $1+0.1+0.01+0.001=1.111$.", "The absolute error is $0.1^4/0.9=1/9000\\approx0.0001111$. Using the remainder tells us how accurate the answer is."] },
