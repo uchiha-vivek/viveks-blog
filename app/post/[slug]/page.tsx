@@ -35,6 +35,7 @@ export async function generateMetadata({
     description: post.dek,
     path: `/post/${post.slug}`,
     imageKey: `post-${post.slug}`,
+    imagePath: post.shareImage,
     publishedTime: `${post.date}T00:00:00+05:30`,
     section: post.topic,
     tags: post.tags,

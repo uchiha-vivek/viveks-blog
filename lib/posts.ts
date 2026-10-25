@@ -16,6 +16,7 @@ export type Post = {
   topStory?: boolean; // renders in the lead slot
   sourceUrl?: string; // "discuss" / external link, optional
   tags?: string[]; // free-form labels, e.g. "Medicaid"; shown on the post and used in search
+  shareImage?: string; // 1200×630 link-preview PNG in /public (see scripts/og-from-sketch.mjs)
   // Drawings from components/illustrations, each shown after body[after].
   illustrations?: { id: IllustrationId; after: number }[];
 };
@@ -53,6 +54,7 @@ export const posts: Post[] = [
     date: "2026-10-25",
     readingTime: 4,
     tags: ["Medicaid", "Healthcare", "Eligibility verification"],
+    shareImage: "/og/why-medicaid-coverage-is-so-hard-to-verify.png",
     illustrations: [{ id: "medicaid-coverage", after: 2 }],
     body: [
       "For most commercial insurance, checking a patient's coverage is a once-a-year chore: the plan renews in January and rarely changes in between. Medicaid does not work that way. More than 70 million people in the US rely on it, and for adults their coverage can change in any month. A patient who was covered at their last visit may have a different plan, a new member ID, or no coverage at all by the next one. For clinics, that turns a routine front-desk check into one of the most error-prone steps in getting paid.",
