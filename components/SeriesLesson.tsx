@@ -4,6 +4,7 @@ import type { Chapter } from "@/lib/curriculum";
 import MathText, { Equation } from "@/components/MathText";
 import LessonQuiz from "@/components/LessonQuiz";
 import ComplexDiagram from "@/components/ComplexDiagram";
+import { illustrations } from "@/components/illustrations";
 
 export default function SeriesLesson({ lesson, lessons, chapter }: { lesson: Lesson; lessons: Lesson[]; chapter: Chapter }) {
   const lessonIndex = lessons.findIndex((item) => item.slug === lesson.slug);
@@ -26,6 +27,7 @@ export default function SeriesLesson({ lesson, lessons, chapter }: { lesson: Les
       {section.paragraphs.map((paragraph, index) => <p key={index}><MathText text={paragraph} /></p>)}
       {section.equations?.map((tex) => <Equation key={tex} tex={tex} />)}
       {section.illustration && <ComplexDiagram kind={section.illustration} />}
+      {section.sketch && (() => { const Sketch = illustrations[section.sketch]; return <Sketch />; })()}
       {section.example && <div className="lesson-example">
         <h3>{section.example.title}</h3>
         <ol>{section.example.steps.map((step, index) => <li key={index}><MathText text={step} /></li>)}</ol>

@@ -72,6 +72,7 @@ export const posts: Post[] = [
     signal: "must-read",
     date: "2026-10-11",
     readingTime: 4,
+    illustrations: [{ id: "littles-law-cafe", after: 0 }],
     body: [
       "Little's Law is a result from queueing theory, a branch of applied mathematics, and it fits in one line: L = λ × W. The average number of items in a system (L) equals the average rate at which they arrive (λ) multiplied by the average time each one spends inside (W). The system can be a checkout line, a thread pool, a message queue or a whole microservice. The law does not care.",
       "Take an API that receives 200 requests per second, each taking 250 milliseconds on average. L = 200 × 0.25 = 50, so about 50 requests are in flight at any moment. That number is your real concurrency. It tells you how many threads, connections or workers you need to keep up, with no load test required.",

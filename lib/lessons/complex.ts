@@ -18,7 +18,7 @@ export const complexLessons: Lesson[] = [
         recap: "A complex number has two real components, linked by the rule $i^2=-1$."
       },
       {
-        id: "powers-of-i", title: "2. Powers of i repeat in a cycle",
+        id: "powers-of-i", title: "2. Powers of i repeat in a cycle", sketch: "powers-of-i",
         paragraphs: ["Multiply by $i$ repeatedly. After four multiplications we return to $1$, so the pattern repeats every four powers. Also $i^0=1$.", "For a nonnegative integer exponent, divide it by $4$ and use the remainder: $0$ gives $1$, $1$ gives $i$, $2$ gives $-1$, and $3$ gives $-i$."],
         equations: ["i^1=i,\\qquad i^2=-1,\\qquad i^3=-i,\\qquad i^4=1"],
         example: { title: "Worked example · A large exponent", steps: ["To find $i^{27}$, write $27=4\\times6+3$.", "Then $i^{27}=(i^4)^6i^3=1^6(-i)=-i$.", "For a negative real number, the principal square root is $\\sqrt{-9}=3i$. Solving $x^2=-9$ gives both $x=3i$ and $x=-3i$."] },
@@ -115,7 +115,7 @@ export const complexLessons: Lesson[] = [
         recap: "Check the modulus of the ratio before summing a complex geometric series."
       },
       {
-        id: "complex-power-series", title: "4. An interval becomes a disc",
+        id: "complex-power-series", title: "4. An interval becomes a disc", sketch: "interval-to-disc",
         paragraphs: ["A complex power series has the form $\\sum a_n(z-c)^n$, where the coefficients and centre may be complex. It converges absolutely inside a radius $R$ about $c$ and diverges outside. Boundary points must be checked separately.", "For real inputs, $|x-c|<R$ describes an interval. In the complex plane, $|z-c|<R$ describes the inside of a circle, called an open disc. A power series always converges at its centre. A radius can also be zero or infinite."],
         equations: ["\\sum_{n=0}^{\\infty}\\frac{(z-1)^n}{2^n}=\\frac{1}{1-(z-1)/2}\\qquad(|z-1|<2)"],
         example: { title: "Worked example · Check a complex input", steps: ["The centre of this series is $1$ and its radius is $2$, since its ratio is $(z-1)/2$.", "At $z=1+i$, $|z-1|=|i|=1<2$, so it converges. The sum is $1/(1-i/2)=4/5+(2/5)i$.", "On the boundary $|z-1|=2$, the ratio has modulus one. In this particular geometric example, every boundary point diverges because the terms have modulus one. Other power series can have different boundary behaviour."] },
@@ -178,7 +178,7 @@ export const complexLessons: Lesson[] = [
         recap: "Rectangular, polar, and exponential forms describe the same number in different useful ways."
       },
       {
-        id: "multiply-rotate", title: "3. Multiplication scales and rotates",
+        id: "multiply-rotate", title: "3. Multiplication scales and rotates", sketch: "multiply-rotate",
         paragraphs: ["The exponential law makes multiplication especially simple: multiply the moduli and add the angles. For division by a nonzero number, divide the moduli and subtract the angles.", "Multiplying by $i=e^{i\\pi/2}$ rotates a point anticlockwise by $90^\\circ$ without changing its distance from the origin. More generally, multiplication by $re^{i\\theta}$ scales distances by $r$ and rotates by $\\theta$.", "Angles add as arguments, but the sum may lie outside the principal range. Add or subtract full turns if a principal argument is required."],
         equations: ["(r_1e^{i\\theta_1})(r_2e^{i\\theta_2})=r_1r_2e^{i(\\theta_1+\\theta_2)}", "\\frac{r_1e^{i\\theta_1}}{r_2e^{i\\theta_2}}=\\frac{r_1}{r_2}e^{i(\\theta_1-\\theta_2)}\\qquad(r_2>0)"],
         example: { title: "Worked example · Rotate a displacement", steps: ["Represent the displacement $(2,1)$ by $z=2+i$.", "Multiply by $i$: $i(2+i)=-1+2i$. The new point is $(-1,2)$, a quarter-turn anticlockwise.", "For a polar product, $(2e^{i\\pi/3})(3e^{i\\pi/6})=6e^{i\\pi/2}=6i$."] },
