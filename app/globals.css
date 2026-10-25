@@ -783,3 +783,37 @@ a {
   .lesson-equation { font-size: 15px; }
   .quiz-option { padding: 12px; }
 }
+
+/* Hand-drawn illustrations (components/illustrations). The paper colour is
+   fixed in palette.ts, so they look the same in light and dark mode. */
+.sketch {
+  margin: 32px 0;
+  padding: 12px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+}
+.sketch svg { display: block; width: 100%; height: auto; }
+.sketch figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  text-align: center;
+  color: #5f5a50;
+}
+
+/* ---------- Post tags ---------- */
+.tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+}
+.tags li {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 4px 12px;
+}

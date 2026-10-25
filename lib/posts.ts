@@ -1,4 +1,5 @@
 import type { Signal, Topic } from "./site";
+import type { IllustrationId } from "@/components/illustrations";
 import { seriesLessons } from "./lessons/series";
 import { complexLessons } from "./lessons/complex";
 
@@ -14,6 +15,9 @@ export type Post = {
   readingTime: number; // minutes
   topStory?: boolean; // renders in the lead slot
   sourceUrl?: string; // "discuss" / external link, optional
+  tags?: string[]; // free-form labels, e.g. "Medicaid"; shown on the post and used in search
+  // Drawings from components/illustrations, each shown after body[after].
+  illustrations?: { id: IllustrationId; after: number }[];
 };
 
 // Your curated learnings. Add a new object to the top of this array
@@ -41,6 +45,24 @@ export const posts: Post[] = [
     date: "2026-10-18",
     readingTime: lesson.readingTime,
   })),
+  {
+    slug: "why-medicaid-coverage-is-so-hard-to-verify",
+    title: "Why Medicaid Coverage Is So Hard to Verify",
+    dek: "Coverage that can change any month, plans that swap member IDs, and eligibility checks that only answer for today: why Medicaid trips up even careful clinics.",
+    topic: "Tech",
+    date: "2026-10-25",
+    readingTime: 4,
+    tags: ["Medicaid", "Healthcare", "Eligibility verification"],
+    illustrations: [{ id: "medicaid-coverage", after: 2 }],
+    body: [
+      "For most commercial insurance, checking a patient's coverage is a once-a-year chore: the plan renews in January and rarely changes in between. Medicaid does not work that way. More than 70 million people in the US rely on it, and for adults their coverage can change in any month. A patient who was covered at their last visit may have a different plan, a new member ID, or no coverage at all by the next one. For clinics, that turns a routine front-desk check into one of the most error-prone steps in getting paid.",
+      "The first problem is churn. Medicaid eligibility depends on income, household size and residency, so a new job, a move to another state or a missed renewal letter can end coverage, sometimes in the middle of a month. When pandemic-era continuous coverage ended in 2023, states had to re-check everyone, and millions of people lost Medicaid, many for paperwork reasons rather than because they were no longer eligible. Some of them re-enroll weeks later, and coverage can apply retroactively, so a visit that looked uninsured on the day may later turn out to have been covered. Children are more stable, because most states now keep them enrolled for 12 months at a time.",
+      "The second problem is managed care. Most Medicaid members do not get their benefits directly from the state. They are assigned to a private managed care plan, and they can move from one plan to another, usually at the start of a month. Each move comes with a new payer and a new member ID. If the clinic checks the old plan, the answer comes back 'inactive', and if it bills the old plan, the claim is denied. Nothing looks wrong at the front desk. The mistake only surfaces weeks later as a rejected claim.",
+      "The third problem is the eligibility check itself. The standard electronic check (the 270/271 transaction) answers for a specific date, and most Medicaid payers will only confirm coverage up to the current month. Ask about next month's appointment and the request is often rejected. The 'coverage end date' in the response is frequently a placeholder, not a promise. On top of that, every state runs its program differently: some do not let you search by Social Security number, many do not support checking a child as a dependent, and some require the clinic to complete extra enrollment before they will answer at all.",
+      "The cost lands on everyone. Clinics lose money to denials and write-offs, and front-desk staff spend hours on payer portals and phone calls. Patients get surprise bills or are turned away, often the people least able to absorb either. Because each failure looks like a one-off, the overall pattern is easy to miss.",
+      "What works is treating Medicaid eligibility as something that expires. Check it close to the date of service and again on the day of the visit, not just when the appointment is booked. Re-check at the start of each month, when plan switches take effect. When a managed care plan says 'inactive', ask the state Medicaid program which plan the patient belongs to now, and record the new member ID. Treat end dates as unknown rather than guaranteed. This is exactly the kind of repetitive, rule-heavy work that software should do, so that people can spend their time on patients instead of payer portals.",
+    ],
+  },
   {
     slug: "littles-law-the-one-equation-every-engineer-should-know",
     title: "Little's Law: The One Equation Every Engineer Should Know",

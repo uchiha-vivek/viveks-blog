@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Post } from "@/lib/posts";
 
 function matches(post: Post, query: string) {
-  const haystack = [post.title, post.dek, post.topic, ...post.body]
+  const haystack = [post.title, post.dek, post.topic, ...(post.tags ?? []), ...post.body]
     .join(" ")
     .toLowerCase();
   return query
