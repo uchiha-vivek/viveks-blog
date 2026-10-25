@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { pageMetadata } from "@/lib/metadata";
 import SeriesLesson from "@/components/SeriesLesson";
 import { getLessonContext } from "@/lib/lessons";
@@ -8,6 +9,7 @@ import { appliedMath, getChapterByNumber } from "@/lib/curriculum";
 import { getPost, posts } from "@/lib/posts";
 import { site } from "@/lib/site";
 import { personId } from "@/lib/structured-data";
+import { illustrations } from "@/components/illustrations";
 
 const DATE = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -35,6 +37,7 @@ export async function generateMetadata({
     imageKey: `post-${post.slug}`,
     publishedTime: `${post.date}T00:00:00+05:30`,
     section: post.topic,
+    tags: post.tags,
   });
 }
 
@@ -58,6 +61,7 @@ export default async function PostPage({
     datePublished: `${post.date}T00:00:00+05:30`,
     url: new URL(`/post/${post.slug}`, site.url).toString(),
     author: { "@type": "Person", "@id": personId, name: site.author, url: site.url },
+    ...(post.tags?.length ? { keywords: post.tags.join(", ") } : {}),
   };
 
   return (
@@ -98,12 +102,28 @@ export default async function PostPage({
         <h1>{post.title}</h1>
         <p className="dek">{post.dek}</p>
 
+        {post.tags && post.tags.length > 0 && (
+          <ul className="tags" aria-label="Tags">
+            {post.tags.map((tag) => (
+              <li key={tag}>#{tag}</li>
+            ))}
+          </ul>
+        )}
+
         <hr className="rule" />
 
         {lessonContext ? <SeriesLesson {...lessonContext} /> : (
           <div className="body">
             {post.body.map((para, i) => (
-              <p key={i} className={i === 0 ? "dropcap" : undefined}>{para}</p>
+              <Fragment key={i}>
+                <p className={i === 0 ? "dropcap" : undefined}>{para}</p>
+                {post.illustrations
+                  ?.filter((ill) => ill.after === i)
+                  .map(({ id }) => {
+                    const Illustration = illustrations[id];
+                    return <Illustration key={id} />;
+                  })}
+              </Fragment>
             ))}
           </div>
         )}

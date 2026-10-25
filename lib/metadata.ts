@@ -8,6 +8,7 @@ export function pageMetadata({
   imageKey,
   publishedTime,
   section,
+  tags,
 }: {
   title: string;
   description: string;
@@ -15,6 +16,7 @@ export function pageMetadata({
   imageKey: string;
   publishedTime?: string;
   section?: string;
+  tags?: string[];
 }): Metadata {
   const url = new URL(path, site.url).toString();
   const image = {
@@ -28,6 +30,7 @@ export function pageMetadata({
   return {
     title,
     description,
+    ...(tags?.length ? { keywords: tags } : {}),
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -37,7 +40,7 @@ export function pageMetadata({
       locale: "en_US",
       images: [image],
       ...(publishedTime
-        ? { type: "article", publishedTime, authors: [site.author], section }
+        ? { type: "article", publishedTime, authors: [site.author], section, tags }
         : { type: "website" }),
     },
     twitter: {
