@@ -3,7 +3,7 @@ export const site = {
   masthead: "Root & Branch",
   tagline: "Notes from the Bottom of the Stack",
   author: "Vivek Sharma",
-  role: "Head of Engineering",
+  role: "Technical Co-Founder",
   company: "Ally Solutions",
   logo: "/ally-logo.png",
   domain: "viveksharma.blog",
