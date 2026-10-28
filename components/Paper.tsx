@@ -76,7 +76,7 @@ export default function Paper({
           <span>{FULL_DATE.format(new Date())}</span>
           <span className="navarrow">›</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+        <div className="topbar-actions">
           <Search posts={posts} />
           <a
             className="icon-btn"
