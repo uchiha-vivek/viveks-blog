@@ -6,7 +6,7 @@ import { posts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: `${appliedMath.title} — ${site.masthead}`,
+  title: `${appliedMath.title} | ${site.masthead}`,
   description: "Explore 13 chapters of applied mathematics, from infinite series to probability, with clear explanations and practical examples.",
   path: "/applied-mathematics",
   imageKey: "mathematics",

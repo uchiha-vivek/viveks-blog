@@ -31,7 +31,7 @@ export async function generateMetadata({
   const post = getPost(slug);
   if (!post) notFound();
   return pageMetadata({
-    title: `${post.title} — ${site.masthead}`,
+    title: `${post.title} | ${site.masthead}`,
     description: post.dek,
     path: `/post/${post.slug}`,
     imageKey: `post-${post.slug}`,
@@ -145,7 +145,7 @@ export default async function PostPage({
 
       <footer className="footer">
         <span>
-          {site.masthead} — curated by {site.author} · ©{" "}
+          {site.masthead}, curated by {site.author} · ©{" "}
           {new Date().getFullYear()}
         </span>
         <div className="colophon">

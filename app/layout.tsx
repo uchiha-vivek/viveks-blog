@@ -23,7 +23,7 @@ const serif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   ...pageMetadata({
-    title: `${site.author}, Engineer — ${site.masthead}`,
+    title: `${site.author}, Engineer | ${site.masthead}`,
     description: site.description,
     path: "/",
     imageKey: "home",

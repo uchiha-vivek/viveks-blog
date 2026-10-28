@@ -26,7 +26,7 @@ export function pageMetadata({
     width: 1200,
     height: 630,
     type: "image/png",
-    alt: `${title} — ${site.author}`,
+    alt: `${title}, by ${site.author}`,
   };
 
   return {
