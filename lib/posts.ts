@@ -128,7 +128,7 @@ export const posts: Post[] = [
   {
     slug: "littles-law-the-one-equation-every-engineer-should-know",
     title: "Little's Law: The One Equation Every Engineer Should Know",
-    dek: "A result from queueing theory that links load, latency and concurrency — and quietly explains most capacity problems.",
+    dek: "A result from queueing theory that links load, latency and concurrency, and quietly explains most capacity problems.",
     topic: "Mathematics",
     chapter: 13,
     signal: "must-read",
@@ -147,7 +147,7 @@ export const posts: Post[] = [
   {
     slug: "azure-policy-and-why-it-matters",
     title: "Azure Policy and Why It Matters",
-    dek: "Guardrails that keep a cloud estate compliant by default — instead of hoping every engineer remembers the rules.",
+    dek: "Guardrails that keep a cloud estate compliant by default, instead of hoping every engineer remembers the rules.",
     topic: "Tech",
     signal: "recommended",
     date: "2026-09-11",

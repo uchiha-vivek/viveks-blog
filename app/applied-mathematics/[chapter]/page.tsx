@@ -20,7 +20,7 @@ export async function generateMetadata({
   const c = getChapter(chapter);
   if (!c) notFound();
   return pageMetadata({
-    title: `Chapter ${c.n}: ${c.title} — ${site.masthead}`,
+    title: `Chapter ${c.n}: ${c.title} | ${site.masthead}`,
     description: c.sections.length
       ? `Explore ${c.title.toLowerCase()}: ${c.sections.join(", ")}. Chapter ${c.n} of the Applied Mathematics collection by ${site.author}.`
       : `Explore ${c.title.toLowerCase()} in Chapter ${c.n} of the Applied Mathematics collection by ${site.author}.`,

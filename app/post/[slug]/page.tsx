@@ -31,7 +31,7 @@ export async function generateMetadata({
   const post = getPost(slug);
   if (!post) notFound();
   return pageMetadata({
-    title: `${post.title} — ${site.masthead}`,
+    title: `${post.title} | ${site.masthead}`,
     description: post.dek,
     path: `/post/${post.slug}`,
     imageKey: `post-${post.slug}`,
