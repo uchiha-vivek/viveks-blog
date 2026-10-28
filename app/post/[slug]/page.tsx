@@ -145,7 +145,7 @@ export default async function PostPage({
 
       <footer className="footer">
         <span>
-          {site.masthead} — curated by {site.author} · ©{" "}
+          {site.masthead}, curated by {site.author} · ©{" "}
           {new Date().getFullYear()}
         </span>
         <div className="colophon">
