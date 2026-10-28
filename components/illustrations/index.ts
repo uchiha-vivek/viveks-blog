@@ -12,6 +12,7 @@ import RetryCheck from "./retry-check";
 import MedicareParts from "./medicare-parts";
 import MedicareQuarters from "./medicare-quarters";
 import MedicareTwoPaths from "./medicare-two-paths";
+import AzurePolicyEffects from "./azure-policy-effects";
 
 // Every illustration, by id. To add one: create a file in this folder,
 // register it here, then reference its id from a post in lib/posts.ts.
@@ -29,6 +30,7 @@ export const illustrations = {
   "medicare-parts": MedicareParts,
   "medicare-quarters": MedicareQuarters,
   "medicare-two-paths": MedicareTwoPaths,
+  "azure-policy-effects": AzurePolicyEffects,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;

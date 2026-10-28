@@ -19,7 +19,13 @@ export type Post = {
   shareImage?: string; // 1200×630 link-preview PNG in /public (see scripts/og-from-sketch.mjs)
   // Drawings from components/illustrations, each shown after body[after].
   illustrations?: { id: IllustrationId; after: number }[];
+  cover?: IllustrationId; // sketch shown on the home page card; defaults to the first illustration
 };
+
+// The sketch that fronts a post on the home page.
+export function coverOf(post: Post): IllustrationId | undefined {
+  return post.cover ?? post.illustrations?.[0]?.id;
+}
 
 // Your curated learnings. Add a new object to the top of this array
 // and it flows into the paper automatically.
@@ -33,6 +39,8 @@ export const posts: Post[] = [
     chapter: 2,
     date: "2026-10-23",
     readingTime: lesson.readingTime,
+    cover: lesson.sections.find((section) => section.sketch)?.sketch,
+    shareImage: `/og/${lesson.slug}.png`,
   })),
   ...seriesLessons.map((lesson): Post => ({
     slug: lesson.slug,
@@ -45,6 +53,8 @@ export const posts: Post[] = [
     chapter: 1,
     date: "2026-10-18",
     readingTime: lesson.readingTime,
+    cover: lesson.sections.find((section) => section.sketch)?.sketch,
+    shareImage: `/og/${lesson.slug}.png`,
   })),
   {
     slug: "where-engineers-still-beat-ai-agents",
@@ -124,6 +134,7 @@ export const posts: Post[] = [
     signal: "must-read",
     date: "2026-10-11",
     readingTime: 4,
+    shareImage: "/og/littles-law-the-one-equation-every-engineer-should-know.png",
     illustrations: [{ id: "littles-law-cafe", after: 0 }],
     body: [
       "Little's Law is a result from queueing theory, a branch of applied mathematics, and it fits in one line: L = λ × W. The average number of items in a system (L) equals the average rate at which they arrive (λ) multiplied by the average time each one spends inside (W). The system can be a checkout line, a thread pool, a message queue or a whole microservice. The law does not care.",
@@ -142,6 +153,8 @@ export const posts: Post[] = [
     date: "2026-09-11",
     readingTime: 5,
     topStory: true,
+    shareImage: "/og/azure-policy-and-why-it-matters.png",
+    illustrations: [{ id: "azure-policy-effects", after: 2 }],
     body: [
       "Azure Policy is a governance service that lets you define rules for what is and is not allowed in your Azure environment, and then enforces them automatically across every subscription and resource group. Instead of trusting each engineer to remember the standards, you encode the standards once and let the platform apply them everywhere.",
       "A policy is a simple statement of intent — \"only allow resources in the West Europe and Central India regions,\" \"require a cost-center tag on every resource,\" or \"deny any storage account that is not encrypted.\" You group related policies into initiatives and assign them at a scope: a management group, a subscription, or a resource group. Everything beneath that scope inherits the rules.",

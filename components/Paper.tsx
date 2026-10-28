@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { Post } from "@/lib/posts";
 import Search from "@/components/Search";
@@ -35,7 +35,13 @@ function Byline({ post }: { post: Post }) {
   );
 }
 
-export default function Paper({ posts }: { posts: Post[] }) {
+export default function Paper({
+  posts,
+  covers = {},
+}: {
+  posts: Post[];
+  covers?: Record<string, ReactNode>;
+}) {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   function toggleTheme() {
@@ -182,6 +188,7 @@ export default function Paper({ posts }: { posts: Post[] }) {
           <Link href={`/post/${lead.slug}`} className="lead">
             <h2>{lead.title}</h2>
             <div className="cols">
+              {covers[lead.slug]}
               {lead.body.map((para, i) => (
                 <p key={i} className={i === 0 ? "dropcap" : undefined}>
                   {para}
@@ -198,6 +205,7 @@ export default function Paper({ posts }: { posts: Post[] }) {
         <div className="grid">
           {rest.map((post) => (
             <Link key={post.slug} href={`/post/${post.slug}`} className="story">
+              {covers[post.slug]}
               <Byline post={post} />
               <h3>{post.title}</h3>
               <div className="fade">
