@@ -117,7 +117,11 @@ export default async function PostPage({
           <div className="body">
             {post.body.map((para, i) => (
               <Fragment key={i}>
-                <p className={i === 0 ? "dropcap" : undefined}>{para}</p>
+                {para.startsWith("## ") ? (
+                  <h2>{para.slice(3)}</h2>
+                ) : (
+                  <p className={i === 0 ? "dropcap" : undefined}>{para}</p>
+                )}
                 {post.illustrations
                   ?.filter((ill) => ill.after === i)
                   .map(({ id }) => {

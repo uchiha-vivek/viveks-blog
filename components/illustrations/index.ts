@@ -13,6 +13,17 @@ import MedicareParts from "./medicare-parts";
 import MedicareQuarters from "./medicare-quarters";
 import MedicareTwoPaths from "./medicare-two-paths";
 import AzurePolicyEffects from "./azure-policy-effects";
+import CheckoutPatternsMap from "./checkout-patterns-map";
+import RepositoryPattern from "./repository-pattern";
+import FactoryPattern from "./factory-pattern";
+import SingletonPattern from "./singleton-pattern";
+import StrategyPattern from "./strategy-pattern";
+import ObserverPattern from "./observer-pattern";
+import BuilderPattern from "./builder-pattern";
+import AdapterPattern from "./adapter-pattern";
+import DecoratorPattern from "./decorator-pattern";
+import CqrsPattern from "./cqrs-pattern";
+import CircuitBreakerPattern from "./circuit-breaker-pattern";
 
 // Every illustration, by id. To add one: create a file in this folder,
 // register it here, then reference its id from a post in lib/posts.ts.
@@ -31,6 +42,17 @@ export const illustrations = {
   "medicare-quarters": MedicareQuarters,
   "medicare-two-paths": MedicareTwoPaths,
   "azure-policy-effects": AzurePolicyEffects,
+  "checkout-patterns-map": CheckoutPatternsMap,
+  "repository-pattern": RepositoryPattern,
+  "factory-pattern": FactoryPattern,
+  "singleton-pattern": SingletonPattern,
+  "strategy-pattern": StrategyPattern,
+  "observer-pattern": ObserverPattern,
+  "builder-pattern": BuilderPattern,
+  "adapter-pattern": AdapterPattern,
+  "decorator-pattern": DecoratorPattern,
+  "cqrs-pattern": CqrsPattern,
+  "circuit-breaker-pattern": CircuitBreakerPattern,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;

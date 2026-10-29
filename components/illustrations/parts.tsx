@@ -139,3 +139,15 @@ export function Label({
     </text>
   );
 }
+
+// Numbered red disc, e.g. to tag a box with its pattern number. Put it in Sketch's children.
+export function Badge({ x, y, n }: { x: number; y: number; n: number }) {
+  return (
+    <g>
+      <circle cx={x} cy={y} r={13} fill={ink.red} />
+      <text x={x} y={y + 6} fontSize={17} textAnchor="middle" fill={ink.paper}>
+        {n}
+      </text>
+    </g>
+  );
+}
