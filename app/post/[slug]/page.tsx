@@ -10,6 +10,8 @@ import { getPost, posts } from "@/lib/posts";
 import { site } from "@/lib/site";
 import { personId } from "@/lib/structured-data";
 import { illustrations } from "@/components/illustrations";
+import { interactives } from "@/components/interactive";
+import MathText, { Equation } from "@/components/MathText";
 
 const DATE = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -119,14 +121,24 @@ export default async function PostPage({
               <Fragment key={i}>
                 {para.startsWith("## ") ? (
                   <h2>{para.slice(3)}</h2>
+                ) : post.math && para.startsWith("$$ ") ? (
+                  <Equation tex={para.slice(3)} />
                 ) : (
-                  <p className={i === 0 ? "dropcap" : undefined}>{para}</p>
+                  <p className={i === 0 ? "dropcap" : undefined}>
+                    {post.math ? <MathText text={para} /> : para}
+                  </p>
                 )}
                 {post.illustrations
                   ?.filter((ill) => ill.after === i)
                   .map(({ id }) => {
                     const Illustration = illustrations[id];
                     return <Illustration key={id} />;
+                  })}
+                {post.interactives
+                  ?.filter((item) => item.after === i)
+                  .map(({ id }) => {
+                    const Interactive = interactives[id];
+                    return <Interactive key={id} />;
                   })}
               </Fragment>
             ))}

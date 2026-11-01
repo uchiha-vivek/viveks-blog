@@ -6,6 +6,8 @@ import PowersOfI from "./powers-of-i";
 import IntervalToDisc from "./interval-to-disc";
 import MultiplyRotate from "./multiply-rotate";
 import LittlesLawCafe from "./littles-law-cafe";
+import SinSlopeCos from "./sin-slope-cos";
+import SinSqueeze from "./sin-squeeze";
 import AgentDoubling from "./agent-doubling";
 import AiPerceptionGap from "./ai-perception-gap";
 import RetryCheck from "./retry-check";
@@ -53,6 +55,8 @@ export const illustrations = {
   "decorator-pattern": DecoratorPattern,
   "cqrs-pattern": CqrsPattern,
   "circuit-breaker-pattern": CircuitBreakerPattern,
+  "sin-slope-cos": SinSlopeCos,
+  "sin-squeeze": SinSqueeze,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;

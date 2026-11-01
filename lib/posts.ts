@@ -1,5 +1,6 @@
 import type { Signal, Topic } from "./site";
 import type { IllustrationId } from "@/components/illustrations";
+import type { InteractiveId } from "@/components/interactive";
 import { seriesLessons } from "./lessons/series";
 import { complexLessons } from "./lessons/complex";
 
@@ -20,6 +21,11 @@ export type Post = {
   // Drawings from components/illustrations, each shown after body[after].
   illustrations?: { id: IllustrationId; after: number }[];
   cover?: IllustrationId; // sketch shown on the home page card; defaults to the first illustration
+  // Interactive pieces from components/interactive, each shown after body[after].
+  interactives?: { id: InteractiveId; after: number }[];
+  // Render $...$ in paragraphs as math, and "$$ ..." paragraphs as display equations.
+  // Off by default so prices like "$185" in other posts stay plain text.
+  math?: boolean;
 };
 
 // The sketch that fronts a post on the home page.
@@ -30,6 +36,71 @@ export function coverOf(post: Post): IllustrationId | undefined {
 // Your curated learnings. Add a new object to the top of this array
 // and it flows into the paper automatically.
 export const posts: Post[] = [
+  {
+    slug: "derivative-of-sin-x-from-first-principles",
+    title: "Derivative of sin x from First Principles: Why It's cos x",
+    dek: "Starting from only the definition of a derivative and the sin(a + b) formula, see step by step why the derivative of sin x is cos x, with an interactive graph and a proof of the two key limits.",
+    topic: "Mathematics",
+    date: "2026-11-01",
+    readingTime: 9,
+    tags: ["Calculus", "Derivatives", "Trigonometry", "First principles"],
+    shareImage: "/og/derivative-of-sin-x-from-first-principles.png",
+    math: true,
+    illustrations: [
+      { id: "sin-slope-cos", after: 1 },
+      { id: "sin-squeeze", after: 23 },
+    ],
+    interactives: [
+      { id: "secant-slope", after: 7 },
+      { id: "sin-derivation", after: 20 },
+    ],
+    body: [
+      "Every calculus student learns that the derivative of sin x is cos x, and most of us just memorise it. In this post we'll build it ourselves, starting from only the definition of a derivative and one formula from school trigonometry, and see exactly where the cos x comes from. No derivative rules allowed.",
+      "Before any algebra, look at the shape. A derivative tells you how steep a curve is at each point. The sine curve climbs most steeply at $x=0$ (slope $1$), is flat at its peak (slope $0$), and falls most steeply at $x=\\pi$ (slope $-1$). Write those slopes down, plot them underneath, and you get another wave that starts at $1$. That wave is $\\cos x$. The rest of this post proves it isn't a coincidence.",
+      "## Step 0: what a derivative is",
+      "Pick a point $x$ on a curve, and a second point a small step $h$ further along, at $x+h$. The straight line through the two points is called a secant. Its slope is rise over run:",
+      "$$ \\text{slope of the secant}=\\frac{f(x+h)-f(x)}{h}",
+      "Now make $h$ smaller and smaller. The second point slides towards the first, and the secant turns into the tangent: the line that just touches the curve at $x$. The slope of that tangent is the derivative. The notation $\\lim_{h\\to0}$ means “the value this settles on as $h$ gets closer and closer to $0$”, without $h$ ever being exactly $0$:",
+      "$$ f'(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}",
+      "That's what “first principles” means: we use only this definition. Try it below. Press Shrink h and watch the red secant turn into a tangent. The red dot underneath sits at the height of the secant's slope, and as $h$ shrinks it lands on the dashed cos curve. Then press Slide x across to watch the slopes trace out the whole curve.",
+      "## Step 1: put sin into the definition",
+      "Replace $f$ with $\\sin$:",
+      "$$ \\frac{d}{dx}\\sin x=\\lim_{h\\to0}\\frac{\\sin(x+h)-\\sin x}{h}",
+      "We can't simply plug in $h=0$. The top becomes $\\sin x-\\sin x=0$, the bottom becomes $0$, and $0/0$ has no value. We have to rewrite the expression until the limit is something we can evaluate. The obstacle is $\\sin(x+h)$: the $x$ and the $h$ are stuck together inside one sine.",
+      "## Step 2: break sin(x + h) apart",
+      "This is where the angle addition formula comes in. For any two angles $a$ and $b$:",
+      "$$ \\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b",
+      "With $a=x$ and $b=h$, it pulls the two apart: $\\sin(x+h)=\\sin x\\cos h+\\cos x\\sin h$. Every term is now something that depends only on $x$ times something that depends only on $h$. That separation is the whole trick. Substitute it in:",
+      "$$ \\lim_{h\\to0}\\frac{\\sin x\\cos h+\\cos x\\sin h-\\sin x}{h}",
+      "## Step 3: regroup",
+      "Put the two $\\sin x$ terms next to each other, factor out $\\sin x$, then divide each piece by $h$:",
+      "$$ \\lim_{h\\to0}\\left[\\sin x\\cdot\\frac{\\cos h-1}{h}+\\cos x\\cdot\\frac{\\sin h}{h}\\right]",
+      "Look at what happened. $\\sin x$ and $\\cos x$ don't change when $h$ changes, so here they are just fixed multipliers. All the $h$ has gathered into two small fractions, $(\\cos h-1)/h$ and $(\\sin h)/h$, with no $x$ in them at all. Once we know what those two fractions approach, we're done. Step through the whole derivation below, one move at a time. Red marks what changed in each step.",
+      "## Step 4: why sin h / h goes to 1",
+      "Try small values and a pattern shows up: $h=0.5$ gives $0.9589$, $h=0.1$ gives $0.9983$, and $h=0.01$ gives $0.99998$. But a few numbers are not a proof. The proof is a picture on a circle of radius $1$.",
+      "Draw an angle $h$ at the centre $O$, measured in radians. It marks a point $P$ on the circle, at height $\\sin h$. Extend the line from $O$ through $P$ until it meets the upright line through $A=(1,0)$. Call that point $T$; its height is $\\tan h$. Now compare three shapes that all have a corner at $O$:",
+      "The small triangle $OAP$ has base $1$ and height $\\sin h$, so its area is $\\tfrac12\\sin h$. The slice of the circle between $OA$ and $OP$ has area $\\tfrac12h$. That's what measuring in radians buys you: the whole circle is $2\\pi$ radians and has area $\\pi$, so each radian of slice is worth $\\tfrac12$. The big triangle $OAT$ has base $1$ and height $\\tan h$, so its area is $\\tfrac12\\tan h$. Each shape fits inside the next one, so after doubling:",
+      "$$ \\sin h\\le h\\le\\tan h",
+      "Divide everything by $\\sin h$ (which is positive for small positive $h$), then flip each fraction over. Flipping reverses the inequalities:",
+      "$$ \\cos h\\le\\frac{\\sin h}{h}\\le1",
+      "As $h\\to0$, $\\cos h\\to1$. So $(\\sin h)/h$ is trapped between two walls, $\\cos h$ and $1$, that both close in on $1$. It has nowhere else to go. This argument is called the squeeze theorem. Negative $h$ gives the same answer, because $\\sin(-h)/(-h)=(\\sin h)/h$.",
+      "This is also why calculus uses radians. In degrees, the slice would have area $(\\pi/360)\\,h$ instead of $\\tfrac12h$, the limit would come out as $\\pi/180\\approx0.01745$ instead of $1$, and the derivative of $\\sin x$ would be $(\\pi/180)\\cos x$. Radians are the unit that makes this constant exactly $1$.",
+      "## Step 5: why (cos h − 1) / h goes to 0",
+      "This one reuses the limit we just proved. Multiply the top and bottom by $\\cos h+1$, and use $\\cos^2h-1=-\\sin^2h$ (from $\\sin^2h+\\cos^2h=1$):",
+      "$$ \\frac{\\cos h-1}{h}=\\frac{\\cos^2h-1}{h\\,(\\cos h+1)}=-\\frac{\\sin h}{h}\\cdot\\frac{\\sin h}{\\cos h+1}",
+      "As $h\\to0$, the first fraction goes to $1$ (Step 4), and the second goes to $0/(1+1)=0$. So the whole thing goes to $-1\\cdot0=0$. The numbers agree: $h=0.1$ gives $-0.04996$ and $h=0.01$ gives $-0.0050$. In plain words, near $h=0$ the cosine curve is flat at its peak, so $\\cos h-1$ shrinks much faster than $h$ does.",
+      "## Step 6: put it together",
+      "$$ \\begin{aligned}\\frac{d}{dx}\\sin x&=\\sin x\\cdot\\underbrace{\\lim_{h\\to0}\\frac{\\cos h-1}{h}}_{0}\\\\&\\quad+\\cos x\\cdot\\underbrace{\\lim_{h\\to0}\\frac{\\sin h}{h}}_{1}\\\\&=\\cos x\\end{aligned}",
+      "The $\\sin x$ term is multiplied by zero and disappears. The $\\cos x$ term is multiplied by one and survives. That's where $\\cos x$ comes from: it was sitting in the angle addition formula all along, as the partner of $\\sin h$.",
+      "A quick check with a calculator. Take $x=\\pi/3$, where $\\cos x=0.5$. The secant slope $(\\sin(x+h)-\\sin x)/h$ is $0.2674$ for $h=0.5$, $0.4559$ for $h=0.1$, $0.4957$ for $h=0.01$ and $0.4996$ for $h=0.001$. It closes in on $0.5$, as promised.",
+      "## Try it yourself: the derivative of cos x",
+      "The same method works for cosine. You need $\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b$. Expand $\\cos(x+h)$, group the $\\cos x$ terms, split the fraction, and use the same two limits:",
+      "$$ \\begin{aligned}\\frac{d}{dx}\\cos x&=\\lim_{h\\to0}\\Big[\\cos x\\cdot\\frac{\\cos h-1}{h}\\\\&\\qquad-\\sin x\\cdot\\frac{\\sin h}{h}\\Big]\\\\&=\\cos x\\cdot0-\\sin x\\cdot1=-\\sin x\\end{aligned}",
+      "The minus sign comes straight from the minus in the cosine formula. Work through it on paper once and it will stick.",
+      "## The method in three moves",
+      "Write the definition. Use an identity to separate $x$ from $h$. Reduce what's left to limits that don't depend on $x$. That's first principles, and every derivative rule you have memorised was proved this way at some point.",
+    ],
+  },
   ...complexLessons.map((lesson): Post => ({
     slug: lesson.slug,
     title: lesson.title,
