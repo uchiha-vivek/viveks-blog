@@ -125,7 +125,7 @@ export default async function PostPage({
                   <Equation tex={para.slice(3)} />
                 ) : (
                   <p className={i === 0 ? "dropcap" : undefined}>
-                    {post.math ? <MathText text={para} /> : para}
+                    {post.math ? <MathText text={para} /> : <LeadTerm text={para} />}
                   </p>
                 )}
                 {post.illustrations
@@ -182,5 +182,17 @@ export default async function PostPage({
         </div>
       </footer>
     </div>
+  );
+}
+
+// A paragraph that opens with **Term** shows that term in bold, for glossary-style entries.
+function LeadTerm({ text }: { text: string }) {
+  const match = text.match(/^\*\*(.+?)\*\*([\s\S]*)$/);
+  if (!match) return <>{text}</>;
+  return (
+    <>
+      <strong>{match[1]}</strong>
+      {match[2]}
+    </>
   );
 }

@@ -26,6 +26,10 @@ import AdapterPattern from "./adapter-pattern";
 import DecoratorPattern from "./decorator-pattern";
 import CqrsPattern from "./cqrs-pattern";
 import CircuitBreakerPattern from "./circuit-breaker-pattern";
+import BillingLoop from "./billing-loop";
+import CostSharing from "./cost-sharing";
+import ClaimStatusCodes from "./claim-status-codes";
+import ClaimAndEra from "./claim-and-era";
 
 // Every illustration, by id. To add one: create a file in this folder,
 // register it here, then reference its id from a post in lib/posts.ts.
@@ -57,6 +61,10 @@ export const illustrations = {
   "circuit-breaker-pattern": CircuitBreakerPattern,
   "sin-slope-cos": SinSlopeCos,
   "sin-squeeze": SinSqueeze,
+  "billing-loop": BillingLoop,
+  "cost-sharing": CostSharing,
+  "claim-status-codes": ClaimStatusCodes,
+  "claim-and-era": ClaimAndEra,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;
