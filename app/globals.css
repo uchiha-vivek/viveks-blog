@@ -682,6 +682,94 @@ a {
   color: var(--accent);
 }
 
+/* ---------- Pagination ---------- */
+.list-top {
+  scroll-margin-top: 16px;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pager a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pager-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+a.pager-step {
+  color: var(--accent);
+}
+a.pager-step:hover .pager-word {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+span.pager-step {
+  opacity: 0.35;
+}
+
+.pager-nums {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pager-nums a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0;
+  color: var(--ink);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.pager-nums a:hover {
+  border-color: var(--rule);
+  color: var(--accent);
+}
+.pager-nums a[aria-current="page"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.pager-gap {
+  padding: 0 4px;
+  color: var(--faint);
+}
+
+.pager-count {
+  display: none;
+}
+
+.pager a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .grid {
@@ -704,6 +792,19 @@ a {
 }
 
 @media (max-width: 640px) {
+  /* On phones: "‹ Newer · Page 2 of 4 · Older ›", big thumb targets */
+  .pager-nums {
+    display: none;
+  }
+  .pager-count {
+    display: block;
+  }
+  .pager-step {
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+  }
   .shell {
     padding: 0 22px 64px;
   }

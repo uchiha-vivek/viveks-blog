@@ -1,6 +1,15 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import type { Post } from "@/lib/posts";
 import Search from "@/components/Search";
@@ -13,6 +22,109 @@ const FULL_DATE = new Intl.DateTimeFormat("en-US", {
   month: "long",
   day: "numeric",
 });
+
+// Page sizes fill whole rows: 3 columns on laptop, 2 on tablet, 1 on phone.
+const PHONE = "(max-width: 640px)";
+const TABLET = "(max-width: 900px)";
+
+function subscribeWidth(onChange: () => void) {
+  const queries = [PHONE, TABLET].map((q) => window.matchMedia(q));
+  queries.forEach((q) => q.addEventListener("change", onChange));
+  return () => queries.forEach((q) => q.removeEventListener("change", onChange));
+}
+
+function usePageSize() {
+  return useSyncExternalStore(
+    subscribeWidth,
+    () => (window.matchMedia(PHONE).matches ? 6 : window.matchMedia(TABLET).matches ? 8 : 9),
+    () => 9,
+  );
+}
+
+function readPageFromUrl() {
+  const n = Number(new URLSearchParams(window.location.search).get("page"));
+  return Number.isInteger(n) && n > 1 ? n : 1;
+}
+
+function pageHref(page: number) {
+  return page > 1 ? `?page=${page}` : "/";
+}
+
+// Page numbers to show, with "…" for gaps: 1 … 4 5 6 … 12
+function pageList(current: number, total: number): (number | "…")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const keep = new Set([1, total, current - 1, current, current + 1]);
+  const out: (number | "…")[] = [];
+  for (let i = 1; i <= total; i++) {
+    if (keep.has(i)) out.push(i);
+    else if (out[out.length - 1] !== "…") out.push("…");
+  }
+  return out;
+}
+
+function Pager({
+  page,
+  total,
+  onGo,
+}: {
+  page: number;
+  total: number;
+  onGo: (page: number) => void;
+}) {
+  const go = (n: number) => (e: MouseEvent) => {
+    // Let ctrl/cmd-click open a new tab as usual.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    onGo(n);
+  };
+  return (
+    <nav className="pager" aria-label="Pages">
+      {page > 1 ? (
+        <a className="pager-step" href={pageHref(page - 1)} onClick={go(page - 1)} rel="prev">
+          ‹ <span className="pager-word">Newer</span>
+        </a>
+      ) : (
+        <span className="pager-step" aria-hidden="true">
+          ‹ <span className="pager-word">Newer</span>
+        </span>
+      )}
+
+      <ol className="pager-nums">
+        {pageList(page, total).map((n, i) =>
+          n === "…" ? (
+            <li key={`gap${i}`} className="pager-gap" aria-hidden="true">
+              …
+            </li>
+          ) : (
+            <li key={n}>
+              <a
+                href={pageHref(n)}
+                onClick={go(n)}
+                aria-current={n === page ? "page" : undefined}
+                aria-label={`Page ${n}`}
+              >
+                {n}
+              </a>
+            </li>
+          ),
+        )}
+      </ol>
+      <span className="pager-count">
+        Page {page} of {total}
+      </span>
+
+      {page < total ? (
+        <a className="pager-step" href={pageHref(page + 1)} onClick={go(page + 1)} rel="next">
+          <span className="pager-word">Older</span> ›
+        </a>
+      ) : (
+        <span className="pager-step" aria-hidden="true">
+          <span className="pager-word">Older</span> ›
+        </span>
+      )}
+    </nav>
+  );
+}
 
 function Byline({ post }: { post: Post }) {
   return (
@@ -62,7 +174,35 @@ export default function Paper({
     [posts, topic],
   );
   const lead = filtered.find((p) => p.topStory) ?? filtered[0];
-  const rest = filtered.filter((p) => p !== lead);
+  const rest = useMemo(() => filtered.filter((p) => p !== lead), [filtered, lead]);
+
+  // Pagination: the page lives in the URL (?page=2) so Back and shared links work.
+  const pageSize = usePageSize();
+  const [page, setPage] = useState(1);
+  const listTop = useRef<HTMLDivElement>(null);
+  const totalPages = Math.max(1, Math.ceil(rest.length / pageSize));
+  const current = Math.min(page, totalPages);
+  const shown = rest.slice((current - 1) * pageSize, current * pageSize);
+
+  useEffect(() => {
+    const sync = () => setPage(readPageFromUrl());
+    sync();
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
+  }, []);
+
+  const goTo = useCallback((n: number, scroll = true) => {
+    setPage(n);
+    window.history.pushState(null, "", pageHref(n));
+    if (scroll) {
+      listTop.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, []);
+
+  function pickTopic(t: Topic | "all") {
+    setTopic(t);
+    if (page !== 1) goTo(1, false);
+  }
 
   return (
     <div className="shell">
@@ -148,7 +288,7 @@ export default function Paper({
           <button
             className="pill"
             aria-pressed={topic === "all"}
-            onClick={() => setTopic("all")}
+            onClick={() => pickTopic("all")}
           >
             All
           </button>
@@ -157,7 +297,7 @@ export default function Paper({
               key={t}
               className="pill"
               aria-pressed={topic === t}
-              onClick={() => setTopic(t)}
+              onClick={() => pickTopic(t)}
             >
               {t}
             </button>
@@ -176,12 +316,14 @@ export default function Paper({
 
       <hr className="rule" />
 
+      <div ref={listTop} className="list-top" />
+
       {!lead && (
         <div className="empty">No entries under “{topic}” yet.</div>
       )}
 
-      {/* Lead story */}
-      {lead && (
+      {/* Lead story (first page only) */}
+      {lead && current === 1 && (
         <>
           <div className="kicker">Top Story</div>
           <Byline post={lead} />
@@ -201,9 +343,9 @@ export default function Paper({
       )}
 
       {/* Story grid */}
-      {rest.length > 0 && (
+      {shown.length > 0 && (
         <div className="grid">
-          {rest.map((post) => (
+          {shown.map((post) => (
             <Link key={post.slug} href={`/post/${post.slug}`} className="story">
               {covers[post.slug]}
               <Byline post={post} />
@@ -215,6 +357,8 @@ export default function Paper({
           ))}
         </div>
       )}
+
+      {totalPages > 1 && <Pager page={current} total={totalPages} onGo={goTo} />}
 
       {/* Footer */}
       <footer className="footer">
