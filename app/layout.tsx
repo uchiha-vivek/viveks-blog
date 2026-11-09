@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { pageMetadata } from "@/lib/metadata";
 import { Playfair_Display, Source_Serif_4 } from "next/font/google";
 import { site } from "@/lib/site";
@@ -56,7 +57,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
       </head>
-      <body className={`${display.variable} ${serif.variable}`}>{children}</body>
+      <body className={`${display.variable} ${serif.variable}`}>
+        {children}
+        {site.cloudflareAnalyticsToken && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: site.cloudflareAnalyticsToken })}
+            strategy="afterInteractive"
+          />
+        )}
+      </body>
     </html>
   );
 }
