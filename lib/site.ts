@@ -13,6 +13,9 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/vivekuchiha/",
   x: "https://x.com/VivekSh80330931",
   xHandle: "@VivekSh80330931",
+  // Cloudflare Web Analytics site token (Cloudflare dashboard → Web Analytics).
+  // It is public: it ships in every page. Leave empty to turn analytics off.
+  cloudflareAnalyticsToken: "fc185cd44b524a859ab2c188aff60125",
   // Topic filter shown above the feed.
   topics: ["Tech", "Deep Tech", "Mathematics"] as const,
   // Signal is the curation level, like the "Signal" toggle.
