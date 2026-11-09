@@ -37,6 +37,33 @@ export function coverOf(post: Post): IllustrationId | undefined {
 // and it flows into the paper automatically.
 export const posts: Post[] = [
   {
+    slug: "p-vs-np-explained-with-a-story",
+    title: "P vs NP Explained With a Story: Easy to Check, Hard to Solve",
+    dek: "A delivery dispatcher, twenty stops and one question worth a million dollars: if a computer can quickly check an answer, can it also quickly find one?",
+    topic: "Deep Tech",
+    date: "2026-11-07",
+    readingTime: 5,
+    tags: ["P vs NP", "Complexity theory", "Algorithms", "Cryptography"],
+    shareImage: "/og/p-vs-np-explained-with-a-story.png",
+    illustrations: [{ id: "find-vs-check", after: 2 }],
+    body: [
+      "Riya runs dispatch for a small delivery company. Every morning she gets a list of addresses, and her first job is to sort them by pin code. It takes the computer a blink, even with ten thousand addresses. Her second job is harder. Her manager wants one van to visit 20 stops and come back, and asks a simple question: is there a route shorter than 100 km?",
+      "Riya's intern, Arjun, offers to brute-force it: try every possible route and keep the shortest. With 20 stops there are about 60 quadrillion different round trips (19! ÷ 2, roughly 6 × 10¹⁶). Checking a billion routes a second, his laptop would finish in about two years. Add ten more stops and the answer becomes longer than the age of the universe. The problem does not grow a little with each new stop. It multiplies.",
+      "Then a driver who has done this run for years walks in and says, 'Try this order.' Riya adds up the 20 legs on a calculator. 96 km. Done. Finding the route might take years, but checking it took under a minute. That gap, between how hard it is to find an answer and how easy it is to check one, is the whole of the P versus NP problem.",
+      "## What P and NP mean",
+      "**P** (polynomial time) is the set of problems a computer can solve quickly. 'Quickly' has a precise meaning: the work grows like a polynomial in the size of the input, such as n² or n³, not like 2ⁿ or n!. Sorting Riya's addresses is in P, and so are finding the shortest path between two points on a map and finding the greatest common divisor of two numbers.",
+      "**NP** (nondeterministic polynomial time) is the set of problems where, if someone hands you an answer, you can check it quickly. The NP does not stand for 'not polynomial'. It means a lucky guesser who always guessed right could solve the problem fast, and all you need to do is verify the guess. Riya's question, 'is there a route under 100 km?', is in NP: show me a route and I can add it up.",
+      "Every problem in P is also in NP, because if you can solve something quickly you can check an answer quickly too: just solve it yourself and compare. The open question is the other direction. Is every problem that is quick to check also quick to solve? If yes, P = NP. If some problems are fundamentally harder to solve than to check, P ≠ NP. Nobody has proved either, and the Clay Mathematics Institute has offered $1 million for a proof since 2000. Most researchers believe P ≠ NP.",
+      "## Why one problem can settle it",
+      "In 1971 Stephen Cook, and independently Leonid Levin, showed that some problems in NP are the hardest of the lot. These are called NP-complete. Any problem in NP can be translated into any NP-complete problem, so a fast algorithm for one of them would give a fast algorithm for all of them. Riya's route question (the decision version of the travelling salesman problem) is NP-complete. So are Boolean satisfiability (SAT), packing boxes into the fewest trucks, building exam timetables without clashes, and thousands of others. If Arjun ever finds a genuinely fast method for his twenty stops, he has not just fixed dispatch. He has shown P = NP.",
+      "That is also why, in practice, companies do not wait for a perfect answer. Route planners, chip designers and airline schedulers use heuristics and approximations that find a very good route quickly, without promising the best one. They work around the wall rather than through it.",
+      "## Why it matters outside dispatch",
+      "Cryptography lives in the same gap. Your bank's encryption rests on problems that are easy one way and hard the other: multiplying two huge primes is instant, but recovering them from their product seems impossibly slow. Checking a claimed answer is a single multiplication, so factoring is in NP. If P = NP and the fast algorithm were practical, much of today's encryption could fall. The reverse is not a safety guarantee, though. Factoring is not known to be NP-complete, so P ≠ NP would not by itself prove that RSA is safe.",
+      "A proof that P = NP would not only be bad news. It would also mean that scheduling, protein folding, logistics and even finding mathematical proofs could, in principle, become as easy as checking them. That is why many researchers doubt it: it would make creativity mechanical, turning every 'I'd know a good answer if I saw one' into 'I can produce one on demand'.",
+      "Back at the depot, Riya keeps the driver's 96 km route and moves on with her day. She cannot prove there is no shorter one, and neither can anyone else, quickly. Checking is easy and finding is hard. Whether that has to be true is the question nobody has answered yet.",
+    ],
+  },
+  {
     slug: "healthcare-billing-glossary-eligibility-benefits-claims",
     title: "Healthcare Billing Glossary: 57 Eligibility, Benefits and Claims Terms Explained",
     dek: "Short, plain-English definitions of the terms you meet when checking insurance eligibility and tracking claims in US healthcare: 270/271, co-insurance, COB, NPI, CPT, Medicare Advantage, 276/277, CARC and more.",

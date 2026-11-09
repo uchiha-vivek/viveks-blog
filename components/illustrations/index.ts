@@ -30,6 +30,7 @@ import BillingLoop from "./billing-loop";
 import CostSharing from "./cost-sharing";
 import ClaimStatusCodes from "./claim-status-codes";
 import ClaimAndEra from "./claim-and-era";
+import FindVsCheck from "./find-vs-check";
 
 // Every illustration, by id. To add one: create a file in this folder,
 // register it here, then reference its id from a post in lib/posts.ts.
@@ -65,6 +66,7 @@ export const illustrations = {
   "cost-sharing": CostSharing,
   "claim-status-codes": ClaimStatusCodes,
   "claim-and-era": ClaimAndEra,
+  "find-vs-check": FindVsCheck,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;
