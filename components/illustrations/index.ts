@@ -32,6 +32,7 @@ import ClaimStatusCodes from "./claim-status-codes";
 import ClaimAndEra from "./claim-and-era";
 import FindVsCheck from "./find-vs-check";
 import HealthcareAiThreeSides from "./healthcare-ai-three-sides";
+import EhrMoneyLoop from "./ehr-money-loop";
 
 // Every illustration, by id. To add one: create a file in this folder,
 // register it here, then reference its id from a post in lib/posts.ts.
@@ -69,6 +70,7 @@ export const illustrations = {
   "claim-and-era": ClaimAndEra,
   "find-vs-check": FindVsCheck,
   "healthcare-ai-three-sides": HealthcareAiThreeSides,
+  "ehr-money-loop": EhrMoneyLoop,
 } satisfies Record<string, ComponentType>;
 
 export type IllustrationId = keyof typeof illustrations;

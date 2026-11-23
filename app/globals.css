@@ -1057,6 +1057,52 @@ span.pager-step {
 .secant-controls label { display: flex; flex-direction: column; gap: 4px; font-size: 15px; font-variant-numeric: tabular-nums; }
 .secant-controls input { width: 100%; accent-color: var(--w-red); }
 
+/* EHR post: a doctor's day, and who gains from each AI feature */
+.ehr-tabs { margin: 0 0 16px; }
+.ehr-bar { display: flex; height: 52px; border-radius: 8px; overflow: hidden; border: 1px solid var(--w-ink); }
+.ehr-bar span {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums;
+  transition: flex-basis 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  min-width: 0; overflow: hidden;
+}
+.ehr-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none; margin: 10px 0 0; padding: 0; font-size: 15px; }
+.ehr-legend i, .ehr-ai-tools i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.ehr-night {
+  display: flex; gap: 12px; align-items: center;
+  margin-top: 14px; padding: 0 14px; max-height: 0; opacity: 0; overflow: hidden;
+  background: #1f2433; color: #f1ecdf; border-radius: 8px; font-size: 16px; line-height: 1.5;
+  transition: max-height 0.6s ease, opacity 0.6s ease, padding 0.6s ease;
+}
+.ehr-night.on { max-height: 160px; opacity: 1; padding: 12px 14px; }
+.ehr-moon { font-size: 28px; line-height: 1; }
+.ehr-hour { margin-top: 18px; padding: 12px 14px; background: #f4f0e6; border-radius: 8px; }
+.ehr-hour p { margin: 0 0 8px; font-size: 15px; }
+.ehr-hour-row { display: grid; grid-template-columns: 76px 1fr 96px; align-items: center; gap: 10px; margin-top: 6px; font-size: 15px; }
+.ehr-hour-track { height: 14px; background: #e4ded0; border-radius: 7px; overflow: hidden; }
+.ehr-hour-track span { display: block; height: 100%; border-radius: 7px; transition: width 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+.ehr-hour-val { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.ehr-source { margin: 12px 0 0; font-size: 13px; color: #5f5a50; line-height: 1.5; }
+
+.ehr-ai-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ehr-ai-tools button {
+  font: inherit; font-size: 15px; line-height: 1.35; text-align: left;
+  padding: 10px 12px; border: 1px solid #cfc7b5; border-radius: 10px;
+  background: transparent; color: var(--w-ink); cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ehr-ai-tools button:hover { border-color: var(--w-ink); }
+.ehr-ai-tools button.on { border-color: var(--w-ink); background: #f4f0e6; box-shadow: inset 3px 0 0 var(--w-ink); }
+.ehr-ai-result { margin-top: 16px; padding: 14px; background: #f4f0e6; border-radius: 10px; }
+.ehr-ai-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin: 0; }
+.ehr-ai-bars div { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ehr-ai-bars dt { font-size: 15px; }
+.ehr-ai-bars dd { display: flex; gap: 4px; margin: 0; }
+.ehr-ai-bars dd span { width: 26px; height: 10px; border-radius: 5px; background: #e4ded0; transition: background 0.3s; }
+.ehr-ai-bars dd span.on { background: var(--w-ink); }
+.ehr-ai-verdict { display: inline-block; margin: 14px 0 0; padding: 3px 12px; border: 1.5px solid; border-radius: 999px; font-size: 14px; font-weight: 700; }
+.ehr-ai-note { margin: 10px 0 0; font-size: 16px; line-height: 1.6; min-height: 3.2em; }
+
 .article .body .katex { font-size: 1.05em; }
 
 @media (max-width: 640px) {
@@ -1067,6 +1113,14 @@ span.pager-step {
   .secant-readout dd { font-size: 16px; }
   .secant-controls { grid-template-columns: 1fr; }
   .secant svg text { font-size: 30px; }
+  .ehr-tabs button { flex: 1 1 100%; }
+  .ehr-bar span { font-size: 14px; }
+  .ehr-hour-row { grid-template-columns: 64px 1fr 84px; gap: 8px; }
+  .ehr-ai-tools { grid-template-columns: 1fr; }
+  .ehr-ai-bars { grid-template-columns: 1fr; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ehr-bar span, .ehr-night, .ehr-hour-track span { transition: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .derivation-lines li.is-current { animation: none; }
